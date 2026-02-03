@@ -42,29 +42,20 @@
 
     <header x-data="{ mobileMenuOpen: false }" class="fixed w-full top-0 z-50 bg-archi-cream/90 backdrop-blur-md shadow-sm border-b-2 border-archi-coffee/10">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            
             <a href="#" class="text-2xl font-extrabold tracking-tight flex items-center gap-3">
                 <img src="Archi bakery_20260118_145814_0000.png" alt="Logo Archi Bakery" class="h-10 w-auto object-contain hover:rotate-6 transition-transform duration-300">
                 <span>Archi Bakery</span>
             </a>
-
             <nav class="hidden md:flex gap-8 font-bold">
                 <a href="#home" class="hover:text-archi-gold transition-colors">Home</a>
                 <a href="#menu" class="hover:text-archi-gold transition-colors">Menu</a>
                 <a href="#contact" class="hover:text-archi-gold transition-colors">Contact</a>
             </nav>
-
             <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-2xl focus:outline-none text-archi-coffee">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
-
-        <div x-show="mobileMenuOpen" 
-             @click.away="mobileMenuOpen = false"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 -translate-y-2"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="md:hidden bg-white shadow-lg rounded-b-2xl p-4 absolute w-full border-t border-gray-100">
+        <div x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" x-transition class="md:hidden bg-white shadow-lg p-4 absolute w-full border-t">
             <div class="flex flex-col gap-4 font-bold text-center">
                 <a href="#home" @click="mobileMenuOpen = false" class="py-2 hover:bg-archi-cream rounded-xl">Home</a>
                 <a href="#menu" @click="mobileMenuOpen = false" class="py-2 hover:bg-archi-cream rounded-xl">Menu</a>
@@ -87,12 +78,6 @@
             <a href="#menu" class="inline-block bg-archi-gold hover:bg-archi-gold-hover text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                 Lihat Menu <i class="fa-solid fa-arrow-right ml-2"></i>
             </a>
-            
-            <div class="mt-12 grid grid-cols-3 gap-4 max-w-3xl mx-auto opacity-90">
-                <img src="https://placehold.co/400x400/5D4037/FFF?text=FOTO+1" class="rounded-2xl h-32 w-full object-cover transform rotate-3 shadow-md border-4 border-white" alt="Donut">
-                <img src="https://placehold.co/400x400/F59E0B/FFF?text=FOTO+2" class="rounded-2xl h-32 w-full object-cover -mt-4 shadow-md border-4 border-white z-10" alt="Cheesecake">
-                <img src="https://placehold.co/400x400/5D4037/FFF?text=FOTO+3" class="rounded-2xl h-32 w-full object-cover transform -rotate-3 shadow-md border-4 border-white" alt="Rollcake">
-            </div>
         </div>
     </section>
 
@@ -179,25 +164,40 @@
                     desc: 'Puding lembut rasa Taro khas yang autentik',
                     category: 'Puding Botol', 
                     price: 'Rp 8.000', 
-                    img: 'putro.png'
+                    img: 'pudtro.png'
+                },
+                { 
+                    id: 4, 
+                    name: 'Nastar Premium', 
+                    desc: 'Kue kering klasik dengan selai nanas asli yang lumer di mulut',
+                    category: 'Kue Kering', 
+                    variants: [
+                        { size: 'Small (250g)', price: 'Rp 35.000' },
+                        { size: 'Medium (350g)', price: 'Rp 50.000' },
+                        { size: 'Large (500g)', price: 'Rp 75.000' }
+                    ],
+                    img: 'https://placehold.co/600x600/f3f4f6/5D4037?text=Nastar' 
+                },
+                { 
+                    id: 5, 
+                    name: 'Kastengel Keju', 
+                    desc: 'Gurihnya keju Edam pilihan dalam setiap gigitan renyah',
+                    category: 'Kue Kering', 
+                    variants: [
+                        { size: 'Small (250g)', price: 'Rp 40.000' },
+                        { size: 'Medium (350g)', price: 'Rp 60.000' },
+                        { size: 'Large (500g)', price: 'Rp 85.000' }
+                    ],
+                    img: 'https://placehold.co/600x600/f3f4f6/5D4037?text=Kastengel' 
                 },
                 { 
                     id: 3, 
                     name: 'Snack Box', 
-                    desc: 'Paket Snack Box dengan beberapa menu kue tradisional dan modern',
+                    desc: 'Paket Snack Box custom untuk berbagai acara rapat dan pesta',
                     category: 'Snack Box', 
-                    price: 'Tanya Admin', 
+                    price: 'Hubungi Kami', 
                     img: 'https://placehold.co/600x600/f3f4f6/5D4037?text=Snack+Box' 
-                },
-                { 
-                    id: 4, 
-                    name: 'Mondey Homemade', 
-                    desc: 'Paket hampers kue kering lebaran',
-                    category: 'Kue Kering', 
-                    price: 'Tanya Admin', 
-                    img: 'https://placehold.co/600x600/f3f4f6/5D4037?text=Kue+Kering' 
-                },
-                
+                }
             ]
         }">
             
@@ -208,34 +208,21 @@
     
             <div class="space-y-4">
                 <template x-for="cat in categories">
-                    <div class="bg-white rounded-2xl shadow-sm border border-archi-coffee/5 overflow-hidden transition-all duration-300 hover:shadow-md">
-                        
-                        <button 
-                            @click="activeCategory === cat ? activeCategory = null : activeCategory = cat"
-                            class="w-full flex items-center justify-between p-6 bg-white hover:bg-archi-cream/30 transition-colors text-left group cursor-pointer select-none">
+                    <div class="bg-white rounded-2xl shadow-sm border border-archi-coffee/5 overflow-hidden">
+                        <button @click="activeCategory === cat ? activeCategory = null : activeCategory = cat" class="w-full flex items-center justify-between p-6 bg-white hover:bg-archi-cream/30 transition-colors text-left">
                             <span class="text-xl font-bold text-archi-coffee pl-2" x-text="cat"></span>
-                            <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 group-hover:bg-white transition-colors">
-                                <i class="fa-solid fa-chevron-down text-archi-coffee/40 transition-transform duration-300"
-                                   :class="activeCategory === cat ? 'rotate-180 text-archi-gold' : ''"></i>
-                            </div>
+                            <i class="fa-solid fa-chevron-down text-archi-coffee/40 transition-transform" :class="activeCategory === cat ? 'rotate-180 text-archi-gold' : ''"></i>
                         </button>
-    
-                        <div x-show="activeCategory === cat" 
-                             x-transition:enter="transition ease-out duration-300"
-                             x-transition:enter-start="opacity-0 -translate-y-4 max-h-0"
-                             x-transition:enter-end="opacity-100 translate-y-0 max-h-[2000px]"
-                             class="bg-archi-cream/20 border-t border-archi-coffee/5">
-                            
+                        <div x-show="activeCategory === cat" x-transition class="bg-archi-cream/20 border-t border-archi-coffee/5">
                             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <template x-for="item in products.filter(p => p.category === cat)">
-                                    <div class="bg-white rounded-xl p-3 shadow-sm flex gap-4 items-center group/item border border-transparent hover:border-archi-gold/30 hover:shadow-md transition-all">
-                                        <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 relative">
-                                            <img :src="item.img" :alt="item.name" class="w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-110">
+                                    <div class="bg-white rounded-xl p-3 shadow-sm flex gap-4 items-center border border-transparent hover:border-archi-gold/30 transition-all">
+                                        <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg bg-gray-200">
+                                            <img :src="item.img" :alt="item.name" class="w-full h-full object-cover">
                                         </div>
                                         <div class="flex-grow">
                                             <h4 class="font-bold text-archi-coffee text-lg leading-tight mb-1" x-text="item.name"></h4>
                                             <p class="text-xs text-gray-500 mb-2" x-text="item.desc"></p>
-                                            
                                             <template x-if="item.variants">
                                                 <div class="mb-3 space-y-1">
                                                     <template x-for="variant in item.variants">
@@ -246,14 +233,10 @@
                                                     </template>
                                                 </div>
                                             </template>
-
                                             <template x-if="!item.variants">
                                                 <p class="text-archi-gold font-extrabold mb-3 text-lg" x-text="item.price"></p>
                                             </template>
-                                            
-                                            <a :href="'https://wa.me/62895410714001?text=Halo%20Archi%20Bakery,%20mau%20pesan%20' + item.name" 
-                                               target="_blank"
-                                               class="inline-flex items-center gap-2 bg-archi-coffee text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-archi-gold transition-colors">
+                                            <a :href="'https://wa.me/62895410714001?text=Halo%20Archi%20Bakery,%20mau%20pesan%20' + item.name" target="_blank" class="inline-flex items-center gap-2 bg-archi-coffee text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-archi-gold transition-colors">
                                                 Pesan <i class="fa-brands fa-whatsapp"></i>
                                             </a>
                                         </div>
@@ -267,34 +250,22 @@
         </div>
     </section>
 
-    <footer id="contact" class="bg-archi-coffee text-archi-cream pt-16 pb-8 rounded-t-[3rem] mt-12 relative z-10">
+    <footer id="contact" class="bg-archi-coffee text-archi-cream pt-16 pb-8 rounded-t-[3rem] mt-12">
         <div class="container mx-auto px-4 text-center">
             <div class="mb-8">
                 <h3 class="text-2xl font-bold mb-4 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-bread-slice"></i> Archi Bakery
                 </h3>
-                <p class="opacity-80 max-w-lg mx-auto text-lg italic">
-                
-Archi Bakery adalah home bakery yang memproduksi aneka kue rumahan berkualitas untuk menemani setiap momen spesial Anda. Kami fokus menghadirkan kue kering premium untuk hampers, donat lembut dengan berbagai varian rasa, serta snack box praktis untuk kebutuhan rapat, meeting, dan berbagai acara.
-                    <br>
-                    <br>
-Seluruh produk Archi Bakery dibuat secara rumahan dengan bahan pilihan, proses yang higienis, dan diproduksi fresh setiap hari agar rasa, tekstur, dan kualitas tetap terjaga. Meski tanpa outlet fisik, kami berkomitmen memberikan layanan profesional, respon cepat, dan hasil produk yang konsisten.
-Bagi kami, kue bukan sekadar makanan, tetapi bentuk perhatian dan kebahagiaan yang bisa dibagikan. 
-                    <br>
-                    <br>
-                    Archi Bakery siap menjadi partner terpercaya untuk kebutuhan hampers, konsumsi kantor, maupun acara spesial Anda.
+                <p class="opacity-80 max-w-lg mx-auto text-sm italic">
+                    Archi Bakery adalah home bakery yang memproduksi aneka kue rumahan berkualitas. Freshly baked everyday dengan bahan pilihan dan proses yang higienis.
                 </p>
             </div>
-            
             <div class="flex justify-center gap-6 mb-8">
-                <a href="https://www.facebook.com/profile.php?id=61586587937304" target="_blank" class="text-3xl hover:text-archi-gold transition-colors hover:scale-110 transform duration-200">
+                <a href="https://www.facebook.com/profile.php?id=61586587937304" target="_blank" class="text-3xl hover:text-archi-gold transition-colors duration-200">
                     <i class="fa-brands fa-square-facebook"></i>
                 </a>
-                <a href="https://www.instagram.com/arch1_bakery?igsh=bW5sNjA4ODlpZDFi" target="_blank" class="text-3xl hover:text-archi-gold transition-colors hover:scale-110 transform duration-200">
+                <a href="https://www.instagram.com/arch1_bakery?igsh=bW5sNjA4ODlpZDFi" target="_blank" class="text-3xl hover:text-archi-gold transition-colors duration-200">
                     <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="#" class="text-3xl hover:text-archi-gold transition-colors hover:scale-110 transform duration-200">
-                    <i class="fa-brands fa-tiktok"></i>
                 </a>
             </div>
             <div class="border-t border-white/10 pt-8 text-sm opacity-60 font-light">
@@ -303,9 +274,7 @@ Bagi kami, kue bukan sekadar makanan, tetapi bentuk perhatian dan kebahagiaan ya
         </div>
     </footer>
 
-    <a href="https://wa.me/62895410714001?text=Halo%20Archi%20Bakery,%20mau%20tanya%20menu%20dong!" 
-       target="_blank"
-       class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#20bd5a] text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-3xl transition-transform hover:scale-110 animate-bounce cursor-pointer">
+    <a href="https://wa.me/62895410714001?text=Halo%20Archi%20Bakery!" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-3xl animate-bounce">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
@@ -316,7 +285,6 @@ Bagi kami, kue bukan sekadar makanan, tetapi bentuk perhatian dan kebahagiaan ya
             image.crossOrigin = "Anonymous";
             image.onload = () => {
                 const mascotShape = confetti.shapeFromImage(image);
-                function randomInRange(min, max) { return Math.random() * (max - min) + min; }
                 (function frame() {
                     confetti({
                         particleCount: 2,
@@ -326,11 +294,10 @@ Bagi kami, kue bukan sekadar makanan, tetapi bentuk perhatian dan kebahagiaan ya
                         origin: { x: Math.random(), y: -0.1 },
                         shapes: [mascotShape], 
                         colors: ['#F59E0B'],
-                        scalar: randomInRange(0.5, 0.8),
-                        drift: randomInRange(-0.5, 0.5),
+                        scalar: Math.random() * (0.8 - 0.5) + 0.5,
                         disableForReducedMotion: true
                     });
-                    setTimeout(frame, randomInRange(1000, 3000)); 
+                    setTimeout(frame, 2000); 
                 }());
             };
             image.src = mascotPath;
@@ -338,4 +305,3 @@ Bagi kami, kue bukan sekadar makanan, tetapi bentuk perhatian dan kebahagiaan ya
     </script>
 </body>
 </html>
-
